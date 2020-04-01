@@ -19,7 +19,18 @@
                     </button>
                 </form>
             </header>
-          
+            <div class="add_task">
+                <form class="add_form">
+                    <h2 class="title_form">Название</h2>
+                    <input class="input" type="text" autofocus>
+                    <h2 class="title_form">Описание</h2>
+                    <textarea class="input input_det"  rows="15"></textarea>
+                    <div class="group_button">
+                        <button class="button button_form">Добавить</button>
+                        <button class="button button_form">Очистить</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </template>
@@ -123,12 +134,52 @@ export default {
         border-radius: 0 5px 5px 0;
     }
     .search_button:hover {
-        width: 60px;
         background: rgb(128, 196, 171);
         border-color: rgb(128, 196, 171);
-        border-radius: 0 5px 5px 0;
     }
     .search_icon {
         fill: rgb(255, 255, 255);
+    }
+    .title_form {
+        margin-top: 30px;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+        align-self: end;
+        color: rgb(85, 155, 129);
+    }
+    .add_form {
+        margin-top: 20px;
+        display: grid;
+        grid-template-rows: repeat(5, max-content);
+        grid-gap: 10px;
+    }
+    .input {
+        height: 40px;
+        outline: none;
+        border: 1px solid rgb(85, 155, 129);
+        border-radius: 5px;
+        padding-left: 20px;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 300;
+        font-size: 16px;
+    }
+    .input_det {
+        padding: 20px;
+        height: 200px;
+    }
+    .group_button {
+        display: grid;
+        grid-template-columns: repeat(2, max-content);
+        justify-items: start;
+        grid-gap: 10px;
+    }
+    .button_form {
+        background: rgb(85, 155, 129);
+        color: #fff;
+    }
+    .button_form:hover {
+        background: rgb(128, 196, 171);
+        border-color: rgb(128, 196, 171);
     }
 </style>
