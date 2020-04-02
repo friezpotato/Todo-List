@@ -2,7 +2,7 @@
     <div class="add_task">
         <form class="add_form">
             <h2 class="title_form">Название</h2>
-            <input v-model="newTask.taskTitle" class="input" type="text" autofocus>
+            <input :placeholder="alertPlaceholder" @keyup="clearAlert" v-model="newTask.taskTitle" :class="{'input_alert': inputAlert}" class="input" type="text" autofocus>
             <h2 class="title_form">Описание</h2>
             <textarea v-model="newTask.taskDetails" class="input input_det" rows="15"></textarea>
         </form>
@@ -23,7 +23,9 @@
                 newTask: {
                     taskTitle: '',
                     taskDetails: ''
-                }
+                },
+                inputAlert: false,
+                alertPlaceholder: ''           
             }
         },
         methods: {
@@ -33,14 +35,27 @@
                     taskTitle: this.newTask.taskTitle,
                     taskDetails: this.newTask.taskDetails
                     })
+                    this.newTask.taskTitle = '',
+                    this.newTask.taskDetails = '',
+                    this.alertPlaceholder = ''
                 }
-                this.newTask.taskTitle = '',
-                this.newTask.taskDetails = ''
+                else{
+                    this.inputAlert = true
+                    this.alertPlaceholder = 'Введите название задачи'
+                }
             },
             resetTask: function(){
                 this.newTask.taskTitle = '',
                 this.newTask.taskDetails = ''
+            },
+            clearAlert: function(){
+                if(this.newTask.taskTitle != ''){
+                    this.inputAlert = false
+                }
             }
+        },
+        watch: {
+            
         },
     }
 </script>
@@ -73,6 +88,13 @@
     .input_det {
         padding: 20px;
         height: 200px;
+    }
+    .input_alert {
+        background: rgb(255, 241, 241);;
+        border: 1px solid rgb(230, 0, 0);
+    }
+    .input_alert::placeholder{
+        color: rgb(230, 0, 0);
     }
     .group_button {
         display: grid;
