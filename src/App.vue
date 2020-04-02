@@ -2,55 +2,57 @@
     <div id="app">
         <div class="header">
             <div class="container">
-                <div class="group_title">
-                    <h1 class="title">Задачи</h1>
-                </div>
+                <h1 v-text="title" class="title"></h1>
             </div>
         </div>
         <div class="container">
             <header class="nav">
-                <button class="button">Добавить задачу</button>
-                <button class="button">Невыполненные задачи</button>
-                <button class="button">Выполненные задачи</button>
+                <div class="button_group">
+                    <button @click="isActive($event)" value="Добавить задачу" class="button">Добавить задачу</button>
+                    <button @click="isActive($event)" value="Невыполненные задачи" class="button">Невыполненные задачи</button>
+                    <button @click="isActive($event)" value="Выполненные задачи" class="button">Выполненные задачи</button>
+                </div>
                 <form class="search_form">
                     <input class="search_input" type="text" placeholder="Поиск">
                     <button class="search_button button">
-                        <svg class="search_icon" enable-background="new 0 0 40 40" id="Слой_1" version="1.1" viewBox="0 0 40 40" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M15.3,30.9C6.8,30.9-0.1,24-0.1,15.5S6.8,0,15.3,0S30.8,7,30.8,15.5c0,1.2-0.1,2.4-0.4,3.6c-0.1,0.5-0.7,0.9-1.2,0.7   c-0.5-0.1-0.9-0.7-0.7-1.2c0.2-1,0.4-2,0.4-3.1c0-7.4-6-13.5-13.5-13.5S1.9,8.1,1.9,15.5s6,13.5,13.5,13.5c1.1,0,2.1-0.1,3.2-0.4   c0.5-0.1,1.1,0.2,1.2,0.7c0.1,0.5-0.2,1.1-0.7,1.2C17.8,30.8,16.6,30.9,15.3,30.9z"/></g><g><path d="M36.4,40c-0.9,0-1.8-0.4-2.5-1l-11-11c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l11,11c0.6,0.6,1.6,0.6,2.1,0   c0.6-0.6,0.6-1.6,0-2.1l-11-11c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l11,11c1.4,1.4,1.4,3.6,0,5C38.2,39.6,37.3,40,36.4,40z"/></g><g><path d="M15.3,27C9,27,3.8,21.8,3.8,15.5S9,4,15.3,4s11.5,5.2,11.5,11.5S21.7,27,15.3,27z M15.3,6c-5.2,0-9.5,4.3-9.5,9.5   s4.3,9.5,9.5,9.5s9.5-4.3,9.5-9.5S20.6,6,15.3,6z"/></g></svg>
+                        <svg class="search_icon" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26.1 26.1" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 26.1 26.1">
+                        <path d="m25.806,22.9l-5.4-5.4c-0.2-0.2-0.2-0.4-0.1-0.6 1.1-1.7 1.7-3.7 1.7-5.9 0-6.1-4.9-11-11-11s-11,4.9-11,11 4.9,11 11,11c2.2,0 4.2-0.6 5.9-1.7 0.2-0.1 0.5-0.1 0.6,0.1l5.4,5.4c0.4,0.4 1,0.4 1.4,0l1.4-1.4c0.5-0.5 0.5-1.1 0.1-1.5zm-14.7-4.9c-3.9,0-7-3.1-7-7s3.1-7 7-7 7,3.1 7,7-3.1,7-7,7z"/>
+                        </svg>
                     </button>
                 </form>
             </header>
-            <div class="add_task">
-                <form class="add_form">
-                    <h2 class="title_form">Название</h2>
-                    <input class="input" type="text" autofocus>
-                    <h2 class="title_form">Описание</h2>
-                    <textarea class="input input_det"  rows="15"></textarea>
-                    <div class="group_button">
-                        <button class="button button_form">Добавить</button>
-                        <button class="button button_form">Очистить</button>
-                    </div>
-                </form>
-            </div>
+            <component :is="view"></component>
         </div>
     </div>
 </template>
 
 <script>
 
+import AddTasks from '@/components/AddTasks.vue';
+import UnfinishedTask from '@/components/UnfinishedTask.vue';
+import FinishedTask from '@/components/FinishedTask.vue';
 
 export default {
     name: 'App',
     data(){
         return{
-            
+            title: "",
+            view: "AddTasks"
         }
     },
     methods: {
-       
+        isActive: function(e){
+            this.title = e.target.value
+        }
     },
     computed: {
-        
+
     },
+    components: {
+        AddTasks,
+        UnfinishedTask,
+        FinishedTask
+    }
 }
 </script>
 
@@ -69,25 +71,25 @@ export default {
         margin: 0 auto;
         padding: 0 20px;
     }
-    .group_title {
-        height: 70px;
-        display: grid;
-        justify-items: space-between;
-        align-items: center;
-    }
     .title {
+        margin-top: 17px;
         color: #fff;
         font-family: 'Roboto', sans-serif;
         font-weight: 400;
         font-size: 26px;
+        transition: .5s;
     }
     .nav {
         margin-top: 20px;
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 2fr;
-        justify-content: start;
+        grid-template-columns: 1fr 1fr;
         align-content: center;
         grid-gap: 5px;
+    }
+    .button_group {
+        display: grid;
+        grid-template-columns: repeat(3, max-content);
+        grid-gap: 10px;
     }
     .button {
         font-family: 'Roboto', sans-serif;
@@ -139,47 +141,5 @@ export default {
     }
     .search_icon {
         fill: rgb(255, 255, 255);
-    }
-    .title_form {
-        margin-top: 30px;
-        font-family: 'Roboto', sans-serif;
-        font-weight: 400;
-        font-size: 16px;
-        align-self: end;
-        color: rgb(85, 155, 129);
-    }
-    .add_form {
-        margin-top: 20px;
-        display: grid;
-        grid-template-rows: repeat(5, max-content);
-        grid-gap: 10px;
-    }
-    .input {
-        height: 40px;
-        outline: none;
-        border: 1px solid rgb(85, 155, 129);
-        border-radius: 5px;
-        padding-left: 20px;
-        font-family: 'Roboto', sans-serif;
-        font-weight: 300;
-        font-size: 16px;
-    }
-    .input_det {
-        padding: 20px;
-        height: 200px;
-    }
-    .group_button {
-        display: grid;
-        grid-template-columns: repeat(2, max-content);
-        justify-items: start;
-        grid-gap: 10px;
-    }
-    .button_form {
-        background: rgb(85, 155, 129);
-        color: #fff;
-    }
-    .button_form:hover {
-        background: rgb(128, 196, 171);
-        border-color: rgb(128, 196, 171);
     }
 </style>
