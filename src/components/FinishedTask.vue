@@ -38,12 +38,12 @@
             recover(index){
                 let ask = confirm('Восстановить эту задачу?')
                 if(ask == true){
-                        this.recoverTask.title = this.finishTasks[index].title,
-                        this.recoverTask.details = this.finishTasks[index].details,
-                        this.recoverTask.taskShow = false
+                    this.recoverTask.title = this.finishTasks[index].title,
+                    this.recoverTask.details = this.finishTasks[index].details,
+                    this.recoverTask.taskShow = false
+                    this.$emit('recover', this.recoverTask)
+                    this.finishTasks.splice(index, 1)
                 }
-                this.$emit('recover', this.recoverTask)
-                this.finishTasks.splice(index, 1)
             }
         },
     }

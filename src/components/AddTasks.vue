@@ -47,7 +47,8 @@
                     this.tasks.push({
                         title: this.title,
                         details: this.details,
-                        taskShow: false
+                        taskShow: false,
+                        edit: false
                     })
                     this.$emit('addTasks', this.tasks)
                     this.title = '',
