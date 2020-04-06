@@ -8,9 +8,28 @@
         <div class="container">
             <header class="nav">
                 <div class="button_group">
-                    <button @click="isActive" value="Добавить задачу" :class="[(title=='Добавить задачу') ? 'button_active' : 'button']">Добавить задачу</button>
-                    <button @click="isActive" value="Невыполненные задачи" :class="[(title=='Невыполненные задачи') ? 'button_active' : 'button']">Невыполненные задачи</button>
-                    <button @click="isActive" value="Выполненные задачи" :class="[(title=='Выполненные задачи') ? 'button_active' : 'button']">Выполненные задачи</button>
+                    <button
+                    @click="isActive"
+                    value="Добавить задачу" 
+                    :class="[(title=='Добавить задачу') ? 'button_active' : 'button']"
+                    >Добавить задачу
+                    </button>
+
+                    <button 
+                    @click="isActive" 
+                    value="Невыполненные задачи" 
+                    :class="[(title=='Невыполненные задачи') ? 'button_active' : 'button']"
+                    >Невыполненные задачи
+                    <span :tasks="tasks" v-text="tasks.length"></span>
+                    </button>
+
+                    <button 
+                    @click="isActive"
+                    value="Выполненные задачи" 
+                    :class="[(title=='Выполненные задачи') ? 'button_active' : 'button']"
+                    >Выполненные задачи
+                    <span :finishTasks="finishTasks" v-text="finishTasks.length"></span>
+                    </button>
                 </div>
                 <form class="search_form">
                     <input class="search_input" type="text" placeholder="Поиск">
@@ -27,24 +46,28 @@
 </template>
 
 <script>
-export default {
-    name: 'v-header',
-    data(){
-        return{
-            title: '',
-            visible: ''
-        }
-    },
-    methods: {
-        isActive(){
-            this.title = event.target.value
-            this.$emit('changeTitle', this.title)
+    export default {
+        props: {
+            tasks: Array,
+            finishTasks: Array
         },
-    },
-    mounted() {
-        this.title = 'Добавить задачу'
-    },
-}
+        name: 'v-header',
+        data(){
+            return{
+                title: '',
+                visible: ''
+            }
+        },
+        methods: {
+            isActive(){
+                this.title = event.target.value
+                this.$emit('changeTitle', this.title)
+            },
+        },
+        mounted() {
+            this.title = 'Добавить задачу'
+        },
+    }
 </script>
 
 <style>

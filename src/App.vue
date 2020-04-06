@@ -1,6 +1,8 @@
 <template>
     <div id="app">
         <v-header 
+        :tasks="tasks"
+        :finishTasks="finishTasks"
         @changeTitle="isActive"
         />
 
