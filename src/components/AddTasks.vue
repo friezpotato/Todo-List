@@ -15,6 +15,7 @@
 
                 <textarea 
                 v-model="details" 
+                @keydown.enter="addTask"
                 class="input input_det" 
                 rows="15">
                 </textarea>

@@ -18,6 +18,7 @@
         <v-finished-tasks 
         v-show="title=='Выполненные задачи'"
         :finishTasks="finishTasks"
+        @recover="recover"
         />
     </div>
 </template>
@@ -34,7 +35,8 @@ export default {
         return{
            title: '',
            tasks: [],
-           finishTasks: []
+           finishTasks: [],
+           recoverTask: {}
         }
     },
     methods: {
@@ -46,6 +48,14 @@ export default {
         },
         finish(data){
             this.finishTasks = data
+        },
+        recover(data){
+            this.recoverTask = data
+            this.tasks.push({
+                title: this.recoverTask.title,
+                details: this.recoverTask.details,
+                taskShow: false
+            })
         }
     },
     mounted() {

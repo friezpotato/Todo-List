@@ -15,9 +15,9 @@
                     v-show="task.taskShow"
                     ></span>
                     <div v-show="task.taskShow" class="task_buttons">
-                        <button @click="finishButton(index)" class="button">Выполнено</button>
-                        <button class="button button_edit">Редактировать</button>
-                        <button class="button button_del">Удалить</button>
+                        <button @click="finishButton(index)" class="button_sm">Выполнено</button>
+                        <button class="button_sm button_edit">Редактировать</button>
+                        <button class="button_sm button_del">Удалить</button>
                     </div>
                 </div>
                 
@@ -39,11 +39,14 @@
         },
         methods: {
             finishButton(index){
-                this.finishTasks.push({
-                    title: this.tasks[index].title,
-                    details: this.tasks[index].details,
-                    taskShow: false
-                })
+                let ask = confirm('Вы выполнили эту задачу?')
+                if(ask == true){
+                    this.finishTasks.push({
+                        title: this.tasks[index].title,
+                        details: this.tasks[index].details,
+                        taskShow: false
+                    })
+                }
                 this.$emit('finish', this.finishTasks)
                 this.tasks.splice(index, 1)
             }
@@ -85,19 +88,22 @@
         grid-gap: 5px;
         margin: 10px
     }
-    .button_icon_done, .button_icon_edit, .button_icon_del {
-        padding: 7px 8px 2px 8px;
+    .button_sm {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 300;
+        font-size: 12px;
+        padding: 5px 10px;
         outline: none;
+        border: 1px solid rgb(85, 155, 129);
         border-radius: 5px;
+        background: #fff;
+        color: rgb(85, 155, 129);
         cursor: pointer;
         transition: .5s;
-        background: #fff;
     }
-    .button_done {
-        border: 1px solid rgb(85, 155, 129);
-    }
-    .button_done:hover {
+    .button_sm:hover {
         background: rgb(85, 155, 129);
+        color: #fff;
     }
     .button_edit {
         border: 1px solid rgb(255, 189, 46);
