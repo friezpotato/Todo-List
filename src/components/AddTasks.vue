@@ -1,42 +1,56 @@
 <template>
-    <div class="add_task">
-        <form class="add_form">
-            <h2 class="title_form">Название</h2>
-            <input :placeholder="alertPlaceholder" @keyup="clearAlert" v-model="newTask.taskTitle" :class="{'input_alert': inputAlert}" class="input" type="text" autofocus>
-            <h2 class="title_form">Описание</h2>
-            <textarea v-model="newTask.taskDetails" class="input input_det" rows="15"></textarea>
-        </form>
-        <div class="group_button">
-            <button @click="addTask" class="button button_form">Добавить</button>
-            <button @click="resetTask" class="button button_form">Очистить</button>
+    <div class="add-task">
+        <div class="container">
+            <form class="add_form">
+                <h2 class="title_form">Название</h2>
+
+                <input 
+                v-model="title" 
+                :placeholder="alertPlaceholder" 
+                @keyup="clearAlert" 
+                :class="{'input_alert': inputAlert}" 
+                class="input" type="text" autofocus>
+
+                <h2 class="title_form">Описание</h2>
+
+                <textarea 
+                v-model="details" 
+                class="input input_det" 
+                rows="15">
+                </textarea>
+
+            </form>
+            <div class="group_button">
+                <button @click="addTask" class="button button_form">Добавить</button>
+                <button @click="resetTask" class="button button_form">Очистить</button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-
-
     export default {
+        name: 'v-add-tasks',
         data() {
             return {
                 tasks: [],
-                newTask: {
-                    taskTitle: '',
-                    taskDetails: ''
-                },
+                title: '',
+                details: '',
                 inputAlert: false,
-                alertPlaceholder: ''           
+                alertPlaceholder: '',  
             }
         },
         methods: {
-            addTask: function(){
-                if(this.newTask.taskTitle != ''){
+            addTask(){
+                if(this.title != ''){
                     this.tasks.push({
-                    taskTitle: this.newTask.taskTitle,
-                    taskDetails: this.newTask.taskDetails
+                        title: this.title,
+                        details: this.details,
+                        taskShow: false
                     })
-                    this.newTask.taskTitle = '',
-                    this.newTask.taskDetails = '',
+                    this.$emit('addTasks', this.tasks)
+                    this.title = '',
+                    this.details = '',
                     this.alertPlaceholder = ''
                 }
                 else{
@@ -44,25 +58,22 @@
                     this.alertPlaceholder = 'Введите название задачи'
                 }
             },
-            resetTask: function(){
-                this.newTask.taskTitle = '',
-                this.newTask.taskDetails = ''
+            resetTask(){
+                this.title = '',
+                this.details = ''
             },
-            clearAlert: function(){
-                if(this.newTask.taskTitle != ''){
+            clearAlert(){
+                if(this.title != ''){
                     this.inputAlert = false
                 }
-            }
-        },
-        watch: {
-            
+            },
         },
     }
 </script>
 
 <style>
     .title_form {
-        margin-top: 30px;
+        margin-top: 20px;
         font-family: 'Roboto', sans-serif;
         font-weight: 400;
         font-size: 16px;
