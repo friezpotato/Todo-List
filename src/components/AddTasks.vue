@@ -1,18 +1,19 @@
 <template>
     <div class="add-task">
         <div class="container">
-            <form class="add_form">
-                <h2 class="title_form">Название</h2>
+            <div class="add_form">
 
+                <h2 class="title_form">Название</h2>
                 <input 
+                @keydown.enter="addTask"
                 v-model="title" 
                 :placeholder="alertPlaceholder" 
                 @keyup="clearAlert" 
                 :class="{'input_alert': inputAlert}" 
-                class="input" type="text" autofocus>
+                class="input" type="text"
+                autofocus>
 
                 <h2 class="title_form">Описание</h2>
-
                 <textarea 
                 v-model="details" 
                 @keydown.enter="addTask"
@@ -20,10 +21,10 @@
                 rows="15">
                 </textarea>
 
-            </form>
+            </div>
             <div class="group_button">
-                <button @click="addTask" class="button button_form">Добавить</button>
-                <button @click="resetTask" class="button button_form">Очистить</button>
+                <button type="button" @click="addTask" class="button button_form">Добавить</button>
+                <button type="button" @click="resetTask" class="button button_form">Очистить</button>
             </div>
         </div>
     </div>
@@ -31,10 +32,8 @@
 
 <script>
     export default {
-        name: 'v-add-tasks',
         data() {
             return {
-                tasks: [],
                 title: '',
                 details: '',
                 inputAlert: false,
@@ -44,17 +43,16 @@
         methods: {
             addTask(){
                 if(this.title != ''){
-                    this.tasks.push({
+                    const task = {
                         title: this.title,
                         details: this.details,
-                        taskShow: false,
-                        edit: false
-                    })
-                    this.$emit('addTasks', this.tasks)
+                        taskShow: false
+                        }
+                    this.$store.commit('ADD_TASK', task)
                     this.title = '',
                     this.details = '',
                     this.alertPlaceholder = ''
-                }
+                    } 
                 else{
                     this.inputAlert = true
                     this.alertPlaceholder = 'Введите название задачи'

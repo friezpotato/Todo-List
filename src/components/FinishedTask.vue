@@ -2,7 +2,7 @@
     <div class="finished-task">
         <div class="container">
             <div class="task_box">
-                <div v-for="(task, index) in finishTasks" :key="index" :index="(index)" class="task">
+                <div v-for="(task, index) in FINISH_TASK" :key="index" :index="(index)" class="task">
                     <h1
                     v-text="task.title" 
                     class="task_title"
@@ -25,25 +25,21 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
     export default {
-        props: {
-            finishTasks: Array
-        },
-        data() {
-            return {
-                recoverTask: {},
-            }
+        computed: {
+            ...mapGetters([
+                'FINISH_TASK'
+            ])
         },
         methods: {
             recover(index){
                 let ask = confirm('Восстановить эту задачу?')
                 if(ask == true){
-                    this.recoverTask.title = this.finishTasks[index].title,
-                    this.recoverTask.details = this.finishTasks[index].details,
-                    this.recoverTask.taskShow = false
-                    this.$emit('recover', this.recoverTask)
-                    this.finishTasks.splice(index, 1)
+                    this.$store.getters.FINISH_TASK[index].taskShow = false
+                    this.$store.commit('ADD_TASK', this.$store.getters.FINISH_TASK[index])
                 }
+                this.$store.commit('DELETE_FROM_FINISH_TASKS', index)
             }
         },
     }
