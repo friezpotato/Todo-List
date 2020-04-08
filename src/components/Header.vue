@@ -5,24 +5,22 @@
                 <div class="header_top">
                     <h1 v-text="title" class="title"></h1>
                     <form class="search_form">
-                        <transition name="fade">
 
-                            <input 
-                            @mousedown="searchActive = true"
-                            @blur="searchActive = false"
-                            v-model="search"
-                            :style="[(searchActive == true) ? {'width': '400px'} : '']"
-                            class="search_input"
-                            type="text" 
-                            placeholder="Поиск">
-
-                        </transition>
+                        <input 
+                        @mousedown="searchActive = true"
+                        @blur="searchActive = false"
+                        v-model="search"
+                        :style="[(searchActive == true) ? {'width': '400px'} : '']"
+                        class="search_input"
+                        type="text" 
+                        placeholder="Поиск">
                         <button type="button" class="search_button button">
                             <svg class="bi bi-search" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"/>
                             <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" clip-rule="evenodd"/>
                             </svg>
                         </button>
+
                     </form>
                 </div>
             </div>
@@ -30,63 +28,64 @@
         <div class="container">
             <header class="nav">
                 <div class="button_group">
-                    <router-link :to="{name: 'addTasks'}">
+
+                    <router-link :to="'/'">
                         <button
                         @click="isActive"
                         value="Добавить задачу" 
                         :class="[(title=='Добавить задачу') ? 'button_active' : 'button']"
                         class="button_xl"
-                        >Добавить задачу
-                        </button>
+                        v-text="'Добавить задачу'"
+                        ></button>
                     </router-link>
                     
-                    <router-link :to="{name: 'tasks'}">
+                    <router-link :to="'/tasks'">
                         <button 
                         @click="isActive" 
                         value="Невыполненные задачи" 
                         :class="[(title=='Невыполненные задачи') ? 'button_active' : 'button']"
                         class="button_xl"
-                        >Невыполненные задачи
-                        <span></span>
-                        </button>
+                        v-text="'Невыполненные задачи ' + TASKS.length"
+                        ></button>
                     </router-link>
                     
-                    <router-link :to="{name: 'finishedTasks'}">
-                         <button 
+                    <router-link :to="'/finishedTasks'">
+                        <button 
                         @click="isActive"
                         value="Выполненные задачи" 
                         :class="[(title=='Выполненные задачи') ? 'button_active' : 'button']"
                         class="button_xl"
-                        >Выполненные задачи
-                        <span></span>
-                        </button>
+                        v-text="'Выполненные задачи ' + FINISH_TASK.length"
+                        ></button>
                     </router-link>
                    
                 </div>
-                
             </header>
         </div>
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
     export default {
         data(){
             return{
-                title: '',
+                title: 'Добавить задачу',
                 visible: '',
                 searchActive: false,
                 search: ''
             }
         },
+        computed: {
+            ...mapGetters([
+                'TASKS',
+                'FINISH_TASK'
+            ])
+        },
         methods: {
             isActive(){
                 this.title = event.target.value
-                this.$emit('changeTitle', this.title)
             },
-        },
-        mounted() {
-            this.title = 'Добавить задачу'
         },
     }
 </script>

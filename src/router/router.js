@@ -12,17 +12,20 @@ let router = new Router({
         {
             path: '/',
             name: 'addTasks',
-            component: AddTasks
+            component: AddTasks,
+            props: true
         },
         {
             path: '/tasks',
             name: 'tasks',
-            component: UnfinishedTask
+            component: UnfinishedTask,
+            props: true
         },
         {
             path: '/finishedTasks',
             name: 'finishedTasks',
-            component: FinishedTask
+            component: FinishedTask,
+            props: true
         }
     ]
 })

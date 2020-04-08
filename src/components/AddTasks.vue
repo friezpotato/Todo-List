@@ -11,7 +11,7 @@
                 @keyup="clearAlert" 
                 :class="{'input_alert': inputAlert}" 
                 class="input" type="text"
-                autofocus>
+                >
 
                 <h2 class="title_form">Описание</h2>
                 <textarea 
