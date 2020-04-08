@@ -1,26 +1,22 @@
 export default {
     state: {
         tasks: [],
-        finishTasks: []
+        finishedTasks: []
     },
     mutations: {
         ADD_TASK:(state, task) => {
+            state.tasks[task.taskShow = false]
             state.tasks.push(task)
         },
         FINISH_TASK: (state, task) => {
-            let ask = confirm('Вы выполнили эту задачу?')
-            if(ask == true){
-                state.finishTasks.push(task)
-            }
+            state.tasks[task.taskShow = false]
+            state.finishedTasks.push(task)
         },
-        DELETE_FROM_TASKS: (state, index) => {
+        DELETE_TASK_FROM_TASKS: (state, index) => {
             state.tasks.splice(index, 1)
         },
-        DELETE_FROM_FINISH_TASKS: (state, index) => {
-            let ask = confirm('Восстановить эту задачу?')
-            if(ask == true){
-                state.finishTasks.splice(index, 1)
-            }
+        DELETE_TASK_FROM_FINISHED_TASKS: (state, index) => {
+            state.finishedTasks.splice(index, 1)
         },
     },
     actions: {
@@ -30,15 +26,15 @@ export default {
         FINISH_TASK: ({commit}, task) => {
             commit('FINISH_TASK', task)
         },
-        DELETE_FROM_TASKS: ({commit}, index) => {
-            commit('DELETE_FROM_TASKS', index)
+        DELETE_TASK_FROM_TASKS: ({commit}, index) => {
+            commit('DELETE_TASK_FROM_TASKS', index)
         },
-        DELETE_FROM_FINISH_TASKS: ({commit}, index) => {
-            commit('DELETE_FROM_FINISH_TASKS', index)
+        DELETE_TASK_FROM_FINISHED_TASKS: ({commit}, index) => {
+            commit('DELETE_TASK_FROM_FINISHED_TASKS', index)
         },
     },
     getters: {
         TASKS: state => state.tasks,
-        FINISH_TASK: state => state.finishTasks
+        FINISHED_TASKS: state => state.finishedTasks
     }
 }

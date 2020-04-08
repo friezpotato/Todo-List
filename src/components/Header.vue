@@ -55,10 +55,9 @@
                         value="Выполненные задачи" 
                         :class="[(title=='Выполненные задачи') ? 'button_active' : 'button']"
                         class="button_xl"
-                        v-text="'Выполненные задачи ' + FINISH_TASK.length"
+                        v-text="'Выполненные задачи ' + FINISHED_TASKS.length"
                         ></button>
                     </router-link>
-                   
                 </div>
             </header>
         </div>
@@ -79,7 +78,7 @@ import { mapGetters } from 'vuex'
         computed: {
             ...mapGetters([
                 'TASKS',
-                'FINISH_TASK'
+                'FINISHED_TASKS'
             ])
         },
         methods: {
@@ -97,16 +96,10 @@ import { mapGetters } from 'vuex'
         background: rgb(85, 155, 129);
     }
     .header_top {
-        height: 70px;
         display: grid;
         grid-template-columns: repeat(2, max-content);
         align-items: center;
         justify-content: space-between
-    }
-    .container {
-        max-width: 1080px;
-        margin: 0 auto;
-        padding: 0 20px;
     }
     .title {
         justify-self: start;

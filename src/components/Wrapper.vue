@@ -2,9 +2,7 @@
     <div class="wrapper">
         <app-header/>
         <keep-alive>
-            <transition name="fade">
-                <router-view></router-view>
-            </transition>
+            <router-view></router-view>
         </keep-alive>
     </div>
 </template>
@@ -19,10 +17,4 @@ export default {
 </script>
 
 <style>
-    .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s;
-    }
-    .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
-    opacity: 0;
-    }
 </style>
