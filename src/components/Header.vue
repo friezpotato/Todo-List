@@ -30,31 +30,38 @@
         <div class="container">
             <header class="nav">
                 <div class="button_group">
-                    <button
-                    @click="isActive"
-                    value="Добавить задачу" 
-                    :class="[(title=='Добавить задачу') ? 'button_active' : 'button']"
-                    class="button_xl"
-                    >Добавить задачу
-                    </button>
-
-                    <button 
-                    @click="isActive" 
-                    value="Невыполненные задачи" 
-                    :class="[(title=='Невыполненные задачи') ? 'button_active' : 'button']"
-                    class="button_xl"
-                    >Невыполненные задачи
-                    <span></span>
-                    </button>
-
-                    <button 
-                    @click="isActive"
-                    value="Выполненные задачи" 
-                    :class="[(title=='Выполненные задачи') ? 'button_active' : 'button']"
-                    class="button_xl"
-                    >Выполненные задачи
-                    <span></span>
-                    </button>
+                    <router-link :to="{name: 'addTasks'}">
+                        <button
+                        @click="isActive"
+                        value="Добавить задачу" 
+                        :class="[(title=='Добавить задачу') ? 'button_active' : 'button']"
+                        class="button_xl"
+                        >Добавить задачу
+                        </button>
+                    </router-link>
+                    
+                    <router-link :to="{name: 'tasks'}">
+                        <button 
+                        @click="isActive" 
+                        value="Невыполненные задачи" 
+                        :class="[(title=='Невыполненные задачи') ? 'button_active' : 'button']"
+                        class="button_xl"
+                        >Невыполненные задачи
+                        <span></span>
+                        </button>
+                    </router-link>
+                    
+                    <router-link :to="{name: 'finishedTasks'}">
+                         <button 
+                        @click="isActive"
+                        value="Выполненные задачи" 
+                        :class="[(title=='Выполненные задачи') ? 'button_active' : 'button']"
+                        class="button_xl"
+                        >Выполненные задачи
+                        <span></span>
+                        </button>
+                    </router-link>
+                   
                 </div>
                 
             </header>

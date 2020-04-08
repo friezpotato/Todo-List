@@ -40,17 +40,14 @@ import {mapGetters} from 'vuex'
         },
         methods: {
             finishButton(index){
-                let ask = confirm('Вы выполнили эту задачу?')
-                if(ask == true){
-                    this.$store.getters.TASKS[index].taskShow = false
-                    this.$store.commit('FINISH_TASK', this.$store.getters.TASKS[index])
-                }
-                this.$store.commit('DELETE_FROM_TASKS', index)
+                this.TASKS[index].taskShow = false
+                this.$store.dispatch('FINISH_TASK', this.TASKS[index])
+                this.$store.dispatch('DELETE_FROM_TASKS', index)
             },
             deleteTask(index){
                 let ask = confirm('Вы уверены, что хотите удалить эту задачу')
                 if(ask == true){
-                    this.$store.commit('DELETE_FROM_TASKS', index)
+                    this.$store.dispatch('DELETE_FROM_TASKS', index)
                 }
             }
         },

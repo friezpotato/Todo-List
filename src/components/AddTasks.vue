@@ -48,7 +48,7 @@
                         details: this.details,
                         taskShow: false
                         }
-                    this.$store.commit('ADD_TASK', task)
+                    this.$store.dispatch('ADD_TASK', task)
                     this.title = '',
                     this.details = '',
                     this.alertPlaceholder = ''

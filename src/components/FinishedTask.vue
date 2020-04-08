@@ -34,12 +34,9 @@ import {mapGetters} from 'vuex'
         },
         methods: {
             recover(index){
-                let ask = confirm('Восстановить эту задачу?')
-                if(ask == true){
-                    this.$store.getters.FINISH_TASK[index].taskShow = false
-                    this.$store.commit('ADD_TASK', this.$store.getters.FINISH_TASK[index])
-                }
-                this.$store.commit('DELETE_FROM_FINISH_TASKS', index)
+                this.FINISH_TASK[index].taskShow = false
+                this.$store.dispatch('ADD_TASK', this.FINISH_TASK[index])
+                this.$store.dispatch('DELETE_FROM_FINISH_TASKS', index)
             }
         },
     }
