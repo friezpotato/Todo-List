@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
-    <app-wrapper></app-wrapper>
-  </div>
+    <v-app id="app">
+        <v-wrapper></v-wrapper>
+    </v-app>
 </template>
 
 <script>
@@ -9,10 +9,9 @@ import Wrapper from '@/components/Wrapper.vue';
 export default {
     name: 'App',
     components: {
-        'app-wrapper': Wrapper
+        'v-wrapper': Wrapper
     }
 };
 </script>
 <style>
-    
 </style>

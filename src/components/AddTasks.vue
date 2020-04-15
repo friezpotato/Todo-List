@@ -1,32 +1,48 @@
 <template>
-    <div class="add-task">
-        <div class="container">
-            <div class="add_form">
-
-                <h2 class="title_form">Название</h2>
-                <input 
-                @keydown.enter="addTask"
-                v-model="title" 
-                :placeholder="alertPlaceholder" 
-                @keyup="clearAlert" 
-                :class="{'input_alert': inputAlert}" 
-                class="input" type="text"
-                >
-
-                <h2 class="title_form">Описание</h2>
-                <textarea 
-                v-model="details" 
-                @keydown.enter="addTask"
-                class="input input_det" 
-                rows="15">
-                </textarea>
-
-            </div>
-            <div class="group_button">
-                <button type="button" @click="addTask" class="button button_form">Добавить</button>
-                <button type="button" @click="resetTask" class="button button_form">Очистить</button>
-            </div>
-        </div>
+    <div>
+        <v-form>
+            <v-text-field
+            label='Название'
+            v-model="task.title"
+            class="font-weight-light"
+            color="teal accent-4"
+            hide-details="auto"
+            counter="40"
+            hint="Не более 40 символов"
+            solo
+            :error-messages="errorNameTask"
+            @blur="errorNameTask = ''"
+            @keydown.enter="addTask"
+            autofocus
+            >
+            </v-text-field>
+            
+            <v-textarea
+            label='Описание'
+            v-model="task.details"
+            class="font-weight-light"
+            color="teal accent-4"
+            rows="13"
+            solo
+            :error-messages="errorDetailsTask"
+            @blur="errorDetailsTask = ''"
+            @keydown.ctrl.enter.prevent.exact="addTask"
+            ></v-textarea>
+        </v-form>
+        <v-row
+        justify="center"
+        >
+            <v-btn
+            v-for="button in buttons" :key="button.name"
+            type="button"
+            @click="button.click"
+            class="text-none subtitle-1 mx-1 mt-n3 elevation-2"
+            :color="button.color"
+            large
+            text
+            rounded
+            > {{button.name}} </v-btn>
+        </v-row>
     </div>
 </template>
 
@@ -34,91 +50,41 @@
     export default {
         data() {
             return {
-                title: '',
-                details: '',
-                inputAlert: false,
-                alertPlaceholder: '',  
+                task: {
+                    title: '',
+                    details: '',
+                    id: 1
+                },
+                buttons: [
+                    {name: 'Добавить', color: 'teal accent-4', click: this.addTask},
+                    {name: 'Очистить', color: 'amber darken-3', click: this.resetTask}
+                ],
+                errorNameTask: '',
+                errorDetailsTask: ''
             }
         },
         methods: {
             addTask(){
-                if(this.title != ''){
-                    const task = {
-                        title: this.title,
-                        details: this.details,
-                        taskShow: false
-                        }
-                    this.$store.dispatch('ADD_TASK', task)
-                    this.title = '',
-                    this.details = '',
-                    this.alertPlaceholder = ''
-                    } 
+                if(!!this.task.title && !!this.task.details){
+                    this.$store.dispatch('ADD_TASK', this.task)
+                    this.task.title = '',
+                    this.task.details = '',
+                    this.task.id++
+                }
+                else if(!this.task.title){
+                    this.errorNameTask = 'А как же название?'
+                }
                 else{
-                    this.inputAlert = true
-                    this.alertPlaceholder = 'Введите название задачи'
+                    this.errorDetailsTask = 'Подробности не помешали бы...'
                 }
             },
             resetTask(){
-                this.title = '',
-                this.details = ''
-            },
-            clearAlert(){
-                if(this.title != ''){
-                    this.inputAlert = false
-                }
+                this.task.title = '',
+                this.task.details = ''
             },
         },
     }
 </script>
 
 <style>
-    .title_form {
-        margin-top: 20px;
-        font-family: 'Roboto', sans-serif;
-        font-weight: 400;
-        font-size: 16px;
-        align-self: end;
-        color: rgb(85, 155, 129);
-    }
-    .add_form {
-        margin-top: 20px;
-        display: grid;
-        grid-template-rows: repeat(5, max-content);
-        grid-gap: 10px;
-    }
-    .input {
-        height: 40px;
-        outline: none;
-        border: 1px solid rgb(85, 155, 129);
-        border-radius: 5px;
-        padding-left: 20px;
-        font-family: 'Roboto', sans-serif;
-        font-weight: 300;
-        font-size: 16px;
-    }
-    .input_det {
-        padding: 20px;
-        height: 200px;
-    }
-    .input_alert {
-        background: rgb(255, 241, 241);;
-        border: 1px solid rgb(230, 0, 0);
-    }
-    .input_alert::placeholder{
-        color: rgb(230, 0, 0);
-    }
-    .group_button {
-        display: grid;
-        grid-template-columns: repeat(2, max-content);
-        justify-items: start;
-        grid-gap: 10px;
-    }
-    .button_form {
-        background: rgb(85, 155, 129);
-        color: #fff;
-    }
-    .button_form:hover {
-        background: rgb(128, 196, 171);
-        border-color: rgb(128, 196, 171);
-    }
 </style>
